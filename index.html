@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dog Obedience and Service Dog Training</title>
+    <title>Positive Reinforcement</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,13 +13,15 @@
             <div class="navbar-left">
                 <div class="logo">
                     <img src="IMG/Logo.png" alt="Logo" class="logo-image">
-                    <h2>Dog Training</h2>
+                    <h2>Positive Reinforcement</h2>
                 </div>
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#about" class="nav-link">About Us</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#dog-concierge" class="nav-link">Dog Concierge</a></li>
+                <li><a href="#boarding" class="nav-link">Boarding Service</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="navbar-right">
@@ -41,7 +43,7 @@
     </nav>
 
     <!-- WhatsApp Floating Button -->
-    <a href="#" class="whatsapp-float" id="whatsappFloat" target="_blank">
+    <a href="https://wa.me/19045637550" class="whatsapp-float" id="whatsappFloat" target="_blank">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
         </svg>
@@ -50,12 +52,20 @@
     <!-- Home Section -->
     <section id="home" class="section home-section">
         <div class="portada-container">
-            <img src="IMG/Home.png" alt="Person with service dog" class="portada-image" id="portadaImage">
+            <div class="slideshow-container">
+                <div class="slideshow-slide active">
+                    <img src="IMG/Home.png" alt="Dog training" class="slideshow-image">
+                </div>
+                <div class="slideshow-slide">
+                    <img src="IMG/Home pag 1.png" alt="Dog training" class="slideshow-image">
+                </div>
+                <div class="slideshow-slide">
+                    <img src="IMG/Home pag 2.png" alt="Dog training" class="slideshow-image">
+                </div>
+            </div>
             <div class="portada-overlay">
-                <div class="portada-content">
-                    <h1 class="portada-title">Your Trusted Companion</h1>
-                    <p class="portada-subtitle">Professional training and service dog rental for a more independent and secure life</p>
-                    <a href="#services" class="btn-primary">Discover Our Services</a>
+                <div class="portada-content-bottom">
+                    <a href="#about" class="portada-button">Learn More About Us</a>
                 </div>
             </div>
         </div>
@@ -68,6 +78,7 @@
             <div class="acerca-content">
                 <div class="acerca-text">
                     <p>I have loved animals all my life. When I was a child, I rode horses on play days and rodeos, showed steers in 4-H; but I always had a dog. Dogs are great animals, they give their love so freely. My new career; Canine obedience training is a goal I had always set for myself, but never set the time. Now, as I move toward my goal, I feel encouraged by the learning I have received, I can see the dog in its truest form: a helper and companion. Now I see how important it is to have a well-behaved dog in our society: whether flying, going to the dog park, or simply walking down the street; Well-behaved dogs are noticeable. This gives the owner pride and more enjoyment of the dog. Our dogs want to respect us and follow our commands, the pack rules, follow the leader. Now is your time to teach your dog to follow you!</p>
+                    <p class="certifications-text">I am a certified professional trainer with memberships in leading canine training organizations and certifications in positive reinforcement training methods.</p>
                 </div>
                 <div class="acerca-image">
                     <img src="IMG/Bio.png" alt="Biography" class="biografia-image" id="biografiaImage">
@@ -80,6 +91,9 @@
     <section id="services" class="section servicios-section">
         <div class="container">
             <h2 class="section-title">Our Services</h2>
+            <div class="services-intro">
+                <p>We come to your home. This enables me to know the hierarchy in the home, where the dog's place is. And you are there with us, so you learn alongside your dog! During our phone conversation we can discuss what you need to help your relationship with the dog.</p>
+            </div>
             <div class="servicios-tabs">
                 <button class="tab-btn active" data-tab="commands">Basic Commands</button>
                 <button class="tab-btn" data-tab="potty">Potty Training</button>
@@ -113,34 +127,54 @@
         </div>
     </section>
 
+    <!-- Dog Concierge Section -->
+    <section id="dog-concierge" class="section dog-concierge-section">
+        <div class="container">
+            <h2 class="section-title">Dog Concierge</h2>
+            <div class="dog-concierge-content">
+                <p>Once we know each other; we can offer doggy concierge. Your pups errands done for you, by a professional. Examples: a) The vet b) Pick up dog food c) Drop off/pick up at daycare d) Drop off/pick up at groomers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Boarding Service Section -->
+    <section id="boarding" class="section boarding-section">
+        <div class="container">
+            <h2 class="section-title">Boarding Service</h2>
+            <div class="boarding-content">
+                <p>Coming soon</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="section contacto-section">
         <div class="container">
-            <h2 class="section-title">Contact Us</h2>
+            <h2 class="section-title contact-title">CONTACT US</h2>
             <div class="contacto-content">
                 <div class="contacto-form-container">
-                    <div class="contacto-form">
-                        <h3>Send us a message</h3>
-                        <form id="contactForm">
-                            <div class="form-group">
-                                <label for="nombre">Name</label>
-                                <input type="text" id="nombre" name="nombre" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="mensaje">Message</label>
-                                <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn-primary">Send Message</button>
-                        </form>
-                    </div>
+                    <h3 class="contact-subtitle">Send us a message</h3>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="nombre">Name</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensaje">Message</label>
+                            <textarea id="mensaje" name="mensaje" rows="6" required></textarea>
+                        </div>
+                        <div class="form-button-container">
+                            <button type="submit" class="btn-primary contact-submit-btn">Send Message</button>
+                        </div>
+                    </form>
                     <div class="social-media-icons">
-                        <a href="#" class="social-icon youtube" id="youtubeLink" target="_blank" title="YouTube">
+                        <a href="#" class="social-icon facebook" id="facebookLink" target="_blank" title="Facebook">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                             </svg>
                         </a>
                         <a href="#" class="social-icon instagram" id="instagramLink" target="_blank" title="Instagram">
@@ -148,9 +182,9 @@
                                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                             </svg>
                         </a>
-                        <a href="#" class="social-icon facebook" id="facebookLink" target="_blank" title="Facebook">
+                        <a href="#" class="social-icon youtube" id="youtubeLink" target="_blank" title="YouTube">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                             </svg>
                         </a>
                         <a href="#" class="social-icon whatsapp" id="whatsappLink" target="_blank" title="WhatsApp">
@@ -298,6 +332,9 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
+            <p>Shawn Phillips</p>
+            <p>904-563-7550</p>
+            <p>Shawn@LeashtoLegacy.org</p>
             <p>&copy; 2024 Dog Training. All rights reserved.</p>
         </div>
     </footer>

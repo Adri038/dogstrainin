@@ -8,7 +8,7 @@ const defaultData = {
     },
     config: {
         contactEmail: 'contacto@perrosguias.com',
-        whatsappNumber: '521234567890',
+        whatsappNumber: '19045637550',
         phoneNumber: '+521234567890',
         youtubeUrl: 'https://youtube.com',
         instagramUrl: 'https://instagram.com',
@@ -79,7 +79,7 @@ function createVideoCard(video, category, index = null, showDelete = false) {
     
     return `
         <div class="video-card" data-video-url="${safeEmbedUrl}" data-video-title="${safeTitle}" ${dataIndex} ${dataCategory}>
-            <div class="video-thumbnail" style="background: linear-gradient(135deg, #40E0D0, #FF7F50);">
+            <div class="video-thumbnail" style="background: linear-gradient(135deg, #40E0D0, #20B2AA);">
                 <img src="${thumbnail}" alt="${safeTitle}" 
                      style="width: 100%; height: 100%; object-fit: cover;"
                      onerror="this.onerror=null; this.style.display='none';">
@@ -302,8 +302,18 @@ function applyConfig() {
     }
     const whatsappFloatEl = document.getElementById('whatsappFloat');
     if (whatsappFloatEl) {
-        const whatsappNum = appData.config.whatsappNumber.replace(/[^0-9]/g, '');
+        let whatsappNum = appData.config.whatsappNumber.replace(/[^0-9]/g, '');
+        // Si el número no empieza con código de país, agregar 1 (USA)
+        if (whatsappNum && !whatsappNum.startsWith('1') && whatsappNum.length === 10) {
+            whatsappNum = '1' + whatsappNum;
+        }
+        // Asegurar que el número tenga el formato correcto
+        if (!whatsappNum) {
+            whatsappNum = '19045637550'; // Número por defecto
+        }
         whatsappFloatEl.href = `https://wa.me/${whatsappNum}`;
+        // Forzar actualización del href
+        whatsappFloatEl.setAttribute('href', `https://wa.me/${whatsappNum}`);
     }
 
     // Update admin configuration fields
@@ -734,6 +744,7 @@ function initImageFallback() {
     const portadaImage = document.getElementById('portadaImage');
     const biografiaImage = document.getElementById('biografiaImage');
     const logoImage = document.querySelector('.logo-image');
+    const slideshowImages = document.querySelectorAll('.slideshow-image');
     
     if (portadaImage) {
         portadaImage.addEventListener('error', function() {
@@ -744,7 +755,7 @@ function initImageFallback() {
     
     if (biografiaImage) {
         biografiaImage.addEventListener('error', function() {
-            this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1280" height="720"%3E%3Crect fill="%23FF7F50" width="1280" height="720"/%3E%3Ctext x="50%25" y="50%25" font-size="32" fill="white" text-anchor="middle" dominant-baseline="middle"%3EAbout%3C/text%3E%3C/svg%3E';
+            this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1280" height="720"%3E%3Crect fill="%2320B2AA" width="1280" height="720"/%3E%3Ctext x="50%25" y="50%25" font-size="32" fill="white" text-anchor="middle" dominant-baseline="middle"%3EAbout%3C/text%3E%3C/svg%3E';
             this.alt = 'About image not available';
         });
     }
@@ -755,6 +766,47 @@ function initImageFallback() {
             this.alt = 'Logo not available';
         });
     }
+    
+    // Handle slideshow images
+    slideshowImages.forEach(img => {
+        img.addEventListener('error', function() {
+            const slide = this.closest('.slideshow-slide');
+            if (slide) {
+                slide.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Slideshow functionality
+function initSlideshow() {
+    const slides = document.querySelectorAll('.slideshow-slide');
+    if (slides.length === 0) return;
+    
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                // Small delay to ensure smooth transition
+                setTimeout(() => {
+                    slide.classList.add('active');
+                }, 50);
+            }
+        });
+    }
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    // Change slide every 6 seconds for slower, smoother transitions
+    setInterval(nextSlide, 6000);
+    
+    // Initialize first slide
+    showSlide(0);
 }
 
 // Initialize when DOM is ready
@@ -769,6 +821,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHamburgerMenu();
     initActiveNavHighlight();
     initImageFallback();
+    initSlideshow();
     applyConfig();
     renderVideos();
     

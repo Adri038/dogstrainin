@@ -44,9 +44,9 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 40px;
 }
 
 /* Navegación */
@@ -56,7 +56,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 1.25rem 0;
+    padding: 0.875rem 0;
     backdrop-filter: blur(10px);
     transition: all var(--transition-base);
 }
@@ -149,7 +149,7 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2.5rem;
+    gap: 2rem;
     align-items: center;
 }
 
@@ -257,19 +257,19 @@ body {
 
 /* Secciones */
 .section {
-    padding: 100px 0;
-    min-height: 100vh;
+    padding: 60px 0;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .section-title {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--dark-color);
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 2.5rem;
     position: relative;
     font-family: 'Poppins', sans-serif;
     letter-spacing: -1px;
@@ -356,8 +356,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding: 3rem 2rem;
-    padding-bottom: 4rem;
+    padding: 2rem;
+    padding-bottom: 3rem;
     z-index: 2;
 }
 
@@ -525,7 +525,7 @@ body {
 .acerca-content {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
-    gap: 4rem;
+    gap: 3rem;
     align-items: center;
 }
 
@@ -558,8 +558,8 @@ body {
 }
 
 .services-intro {
-    max-width: 900px;
-    margin: 0 auto 3rem;
+    max-width: 1000px;
+    margin: 0 auto 2rem;
     text-align: center;
     font-size: 1.1rem;
     line-height: 1.8;
@@ -577,7 +577,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 3.5rem;
+    margin-bottom: 2.5rem;
     flex-wrap: wrap;
 }
 
@@ -621,8 +621,8 @@ body {
 
 .videos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
 }
 
 .video-card {
@@ -730,7 +730,7 @@ body {
 }
 
 .video-info {
-    padding: 2rem;
+    padding: 1.5rem;
 }
 
 .video-title {
@@ -766,7 +766,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -1459,7 +1459,7 @@ body {
 }
 
 .dog-concierge-content {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     text-align: center;
     font-size: 1.1rem;
@@ -1480,19 +1480,19 @@ body {
 }
 
 .boarding-content {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--primary-color);
-    padding: 3rem;
+    padding: 2rem;
 }
 
 /* Certifications Text */
 .certifications-text {
-    margin-top: 2rem;
-    padding-top: 2rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
     border-top: 2px solid var(--light-dark);
     font-weight: 600;
     color: var(--primary-dark);
@@ -1503,8 +1503,8 @@ body {
     background: linear-gradient(135deg, var(--dark-color), var(--dark-light));
     color: var(--white);
     text-align: center;
-    padding: 3rem 0;
-    margin-top: 4rem;
+    padding: 2.5rem 0;
+    margin-top: 3rem;
 }
 
 .footer p {
@@ -1517,6 +1517,28 @@ body {
     margin-top: 2rem;
     opacity: 0.7;
     font-size: 0.85rem;
+}
+
+/* Media Query para pantallas grandes (1920px+) */
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1800px;
+        padding: 0 60px;
+    }
+    
+    .section {
+        padding: 80px 0;
+    }
+    
+    .section-title {
+        font-size: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    .videos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2.5rem;
+    }
 }
 
 /* Responsive Design */

@@ -332,13 +332,15 @@ function applyConfig() {
     if (facebookUrl) facebookUrl.value = appData.config.facebookUrl;
 }
 
-// Smooth scrolling
+// Smooth scrolling (only for anchors on the same page)
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const href = this.getAttribute('href');
+            // Only prevent default if the anchor exists on the current page
+            const target = document.querySelector(href);
             if (target) {
+                e.preventDefault();
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
@@ -347,6 +349,7 @@ function initSmoothScroll() {
                 const navMenu = document.getElementById('navMenu');
                 if (navMenu) navMenu.classList.remove('active');
             }
+            // If anchor doesn't exist, let the browser handle it normally (navigate to page)
         });
     });
 }
@@ -715,28 +718,48 @@ function initHamburgerMenu() {
     }
 }
 
-// Highlight active menu item based on scroll
+// Highlight active menu item based on current page
 function initActiveNavHighlight() {
-    const sections = document.querySelectorAll('.section');
     const navLinks = document.querySelectorAll('.nav-link');
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (window.pageYOffset >= sectionTop - 200) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const linkHref = link.getAttribute('href');
+        // Check if the link matches the current page
+        if (linkHref === currentPage || (currentPage === '' && linkHref === 'index.html')) {
+            link.classList.add('active');
+        }
     });
+    
+    // Also handle scroll-based highlighting for anchors on the same page
+    const sections = document.querySelectorAll('.section');
+    if (sections.length > 0) {
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            // Only update if we're on a page with sections
+            if (current) {
+                navLinks.forEach(link => {
+                    const linkHref = link.getAttribute('href');
+                    // Only update if it's an anchor link
+                    if (linkHref.startsWith('#')) {
+                        link.classList.remove('active');
+                        if (linkHref === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    }
+                });
+            }
+        });
+    }
 }
 
 // Handle missing images

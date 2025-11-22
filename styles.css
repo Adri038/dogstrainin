@@ -846,8 +846,8 @@ body {
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    padding-top: 1.5rem;
-    border-top: none;
+    padding: 1.5rem 0;
+    margin: 1.5rem 0;
     flex-wrap: wrap;
 }
 

@@ -22,7 +22,7 @@
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="about.html" class="nav-link">About Us</a></li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
-                <li><a href="dog-concierge.html" class="nav-link">Dog Concierge</a></li>
+                <li><a href="dog-concierge.html" class="nav-link">Puppy Concierge</a></li>
                 <li><a href="boarding.html" class="nav-link">Boarding Service</a></li>
                 <li><a href="contact.html" class="nav-link active">Contact</a></li>
             </ul>
@@ -197,6 +197,104 @@
                 </div>
 
                 <div class="admin-section">
+                    <h3>Edit Page Texts</h3>
+                    <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.9rem;">Edit paragraph texts for all pages. Titles, images, and colors remain unchanged.</p>
+                    <div class="text-edit-tabs">
+                        <button class="text-edit-tab-btn" data-text-tab="home-texts">Home</button>
+                        <button class="text-edit-tab-btn" data-text-tab="about-texts">About Us</button>
+                        <button class="text-edit-tab-btn" data-text-tab="services-texts">Services</button>
+                        <button class="text-edit-tab-btn" data-text-tab="concierge-texts">Puppy Concierge</button>
+                        <button class="text-edit-tab-btn" data-text-tab="boarding-texts">Boarding</button>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="home-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Paragraph 1</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="0" rows="3"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 2</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="1" rows="3"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 3</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="2" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 4</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="3" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 5</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="4" rows="4"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="home">Save Home Texts</button>
+                        </div>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="about-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Paragraph 1</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="0" rows="2"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 2</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="1" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 3</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="2" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 4</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="3" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 5</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="4" rows="3"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Certifications</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="5" rows="2"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="about">Save About Texts</button>
+                        </div>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="services-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Introduction Text</label>
+                                <textarea class="text-editor-input" data-page="services" data-index="0" rows="4"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="services">Save Services Text</button>
+                        </div>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="concierge-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Service Description</label>
+                                <textarea class="text-editor-input" data-page="concierge" data-index="0" rows="5"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="concierge">Save Concierge Text</button>
+                        </div>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="boarding-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Service Description</label>
+                                <textarea class="text-editor-input" data-page="boarding" data-index="0" rows="3"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="boarding">Save Boarding Text</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
                     <h3>General Settings</h3>
                     <div class="config-group">
                         <label for="contactEmail">Contact form destination email:</label>
@@ -240,6 +338,9 @@
             <p>904-563-7550</p>
             <p>Shawn@LeashtoLegacy.org</p>
             <p>&copy; 2024 Dog Training. All rights reserved.</p>
+            <div style="margin-top: 2rem; text-align: center;">
+                <img src="IMG/Logo.png" alt="Logo" style="max-width: 150px; height: auto;">
+            </div>
         </div>
     </footer>
 

@@ -22,7 +22,7 @@
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="about.html" class="nav-link active">About Us</a></li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
-                <li><a href="dog-concierge.html" class="nav-link">Dog Concierge</a></li>
+                <li><a href="dog-concierge.html" class="nav-link">Puppy Concierge</a></li>
                 <li><a href="boarding.html" class="nav-link">Boarding Service</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
@@ -57,13 +57,12 @@
             <h2 class="section-title">About Us</h2>
             <div class="acerca-content">
                 <div class="acerca-text">
-                    <p><strong>Biography:</strong></p>
-                    <p>I have loved animals all my life.  As a kid I rode horses in playdays and rodeos, showed steers in 4-H; but, I always had a dog.  Dogs are great animals, they give their love so freely.  My new career; Dog Obedience training is a goal I had always set, but I never set the time.</p>
-                    <p>Now as I advance toward my goal I am encouraged by the learning I have received, I am able to see the dog for its truest form-a helper and companion.  I see now how having a well behaved dog matters in our society:  whether it is flying, going to the dog park or just walking up the street; the well behaved dogs are noticed.  This gives the owner pride and more enjoyment of the dog.</p>
-                    <p>Our dogs want to respect us and follow our commands, pack rules—follow the leader.  Now it is your time to teach your dog to follow you!</p>
-                    <p>I will send a picture on the next email-it will go with the Biography.</p>
-                    <p>Thank You,<br>Shawn</p>
-                    <p class="certifications-text">I am a certified professional trainer with memberships in leading canine training organizations and certifications in positive reinforcement training methods.</p>
+                    <p class="editable-text" data-page="about" data-index="0">It's a dog's world!</p>
+                    <p class="editable-text" data-page="about" data-index="1">They are great animals who give their love so freely and never ask anything in return. Dogs have always been a part of my life.  When I was a child, I rode horses in playdays, rodeos and showed steers in 4-H.  But I always had a dog with me.</p>
+                    <p class="editable-text" data-page="about" data-index="2">Canine obedience training is a goal I had always set for myself but never set the time.  Now as I move forward toward my goal, I feel encouraged by the learning I have received.  I can see the dog in its truest form, a helper and a companion.</p>
+                    <p class="editable-text" data-page="about" data-index="3">It is more important than ever to have a well-behaved dog in our society; whether flying, going to the dog park, or simply walking down the street.  Well-mannered dogs are noticeable as they saunter down the street, they receive smiles and "may I pet your dog".  They are a child to be proud of!  Not just our pride, but safety:  an untrained dog could shake out of his/her collar and bolt into traffic!  Will they return to you when you call?</p>
+                    <p class="editable-text" data-page="about" data-index="4">Our dogs want to respect us and follow the leader while being taught. Now is your time to teach your dog to follow "you" the leader.</p>
+                    <p class="editable-text certifications-text" data-page="about" data-index="5">I am a certified professional trainer with memberships in leading canine training organizations and certifications in positive reinforcement training methods.</p>
                 </div>
                 <div class="acerca-image">
                     <img src="IMG/Bio.png" alt="Biography" class="biografia-image" id="biografiaImage">
@@ -162,6 +161,104 @@
                                 <button type="submit" class="btn-primary">Add Video</button>
                             </form>
                             <div class="videos-list" id="videosListTrucos"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Edit Page Texts</h3>
+                    <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.9rem;">Edit paragraph texts for all pages. Titles, images, and colors remain unchanged.</p>
+                    <div class="text-edit-tabs">
+                        <button class="text-edit-tab-btn active" data-text-tab="home-texts">Home</button>
+                        <button class="text-edit-tab-btn" data-text-tab="about-texts">About Us</button>
+                        <button class="text-edit-tab-btn" data-text-tab="services-texts">Services</button>
+                        <button class="text-edit-tab-btn" data-text-tab="concierge-texts">Puppy Concierge</button>
+                        <button class="text-edit-tab-btn" data-text-tab="boarding-texts">Boarding</button>
+                    </div>
+
+                    <div class="text-edit-tab-content active" id="home-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Paragraph 1</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="0" rows="3"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 2</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="1" rows="3"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 3</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="2" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 4</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="3" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 5</label>
+                                <textarea class="text-editor-input" data-page="home" data-index="4" rows="4"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="home">Save Home Texts</button>
+                        </div>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="about-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Paragraph 1</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="0" rows="2"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 2</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="1" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 3</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="2" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 4</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="3" rows="4"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Paragraph 5</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="4" rows="3"></textarea>
+                            </div>
+                            <div class="text-editor-item">
+                                <label>Certifications</label>
+                                <textarea class="text-editor-input" data-page="about" data-index="5" rows="2"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="about">Save About Texts</button>
+                        </div>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="services-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Introduction Text</label>
+                                <textarea class="text-editor-input" data-page="services" data-index="0" rows="4"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="services">Save Services Text</button>
+                        </div>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="concierge-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Service Description</label>
+                                <textarea class="text-editor-input" data-page="concierge" data-index="0" rows="5"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="concierge">Save Concierge Text</button>
+                        </div>
+                    </div>
+
+                    <div class="text-edit-tab-content" id="boarding-texts">
+                        <div class="text-editor-container">
+                            <div class="text-editor-item">
+                                <label>Service Description</label>
+                                <textarea class="text-editor-input" data-page="boarding" data-index="0" rows="3"></textarea>
+                            </div>
+                            <button class="btn-primary save-texts-btn" data-page="boarding">Save Boarding Text</button>
                         </div>
                     </div>
                 </div>

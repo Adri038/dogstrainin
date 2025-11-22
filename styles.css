@@ -329,6 +329,56 @@ body {
     animation: zoomIn 20s ease-in-out infinite alternate;
 }
 
+.slideshow-prev,
+.slideshow-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+    color: var(--primary-color);
+}
+
+.slideshow-prev:hover,
+.slideshow-next:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.slideshow-prev {
+    left: 20px;
+}
+
+.slideshow-next {
+    right: 20px;
+}
+
+@media (max-width: 768px) {
+    .slideshow-prev,
+    .slideshow-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .slideshow-prev {
+        left: 10px;
+    }
+    
+    .slideshow-next {
+        right: 10px;
+    }
+}
+
 .portada-image {
     width: 100%;
     height: 100%;
@@ -1069,6 +1119,136 @@ body {
     font-weight: 600;
 }
 
+/* Text Editor Styles */
+.text-edit-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--light-dark);
+    padding-bottom: 1rem;
+}
+
+.text-edit-tab-btn {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: var(--text-dark);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.text-edit-tab-btn:hover {
+    background: var(--light-color);
+    color: var(--primary-color);
+}
+
+.text-edit-tab-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), #20B2AA);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(64, 224, 208, 0.3);
+}
+
+.text-edit-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.text-edit-tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.text-editor-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.text-editor-item {
+    margin-bottom: 1.5rem;
+}
+
+.text-editor-item:last-of-type {
+    margin-bottom: 2rem;
+}
+
+.text-editor-item label {
+    display: block;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.text-editor-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: white;
+    transition: all 0.3s ease;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.text-editor-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(64, 224, 208, 0.1);
+    background: #fafafa;
+}
+
+.text-editor-input:hover {
+    border-color: #b0b0b0;
+}
+
+.save-texts-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), #20B2AA);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+.save-texts-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(64, 224, 208, 0.4);
+}
+
+.save-texts-btn:active {
+    transform: translateY(0);
+}
+
 .admin-tabs {
     display: flex;
     gap: 1rem;
@@ -1453,25 +1633,57 @@ body {
     box-shadow: 0 4px 12px rgba(64, 224, 208, 0.4);
 }
 
-/* Dog Concierge Section */
+/* Puppy Concierge Section */
 .dog-concierge-section {
     background: linear-gradient(180deg, var(--light-color) 0%, var(--white) 100%);
 }
 
 .dog-concierge-content {
-    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--text-dark);
 }
 
-.dog-concierge-content p {
+.concierge-text {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    text-align: justify;
+    color: var(--text-dark);
+    font-weight: 400;
+}
+
+.concierge-text p {
     padding: 2rem;
     background: var(--white);
     border-radius: 16px;
     box-shadow: 0 8px 24px var(--shadow-md);
+    margin: 0;
+}
+
+.puppy-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px var(--shadow-lg);
+    transition: all var(--transition-slow);
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
+
+.puppy-image:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 25px 70px var(--shadow-lg);
+}
+
+.concierge-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Boarding Service Section */
@@ -1637,7 +1849,21 @@ body {
         font-size: 1rem;
     }
 
-    .dog-concierge-content p,
+    .dog-concierge-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .concierge-text p {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+
+    .puppy-image {
+        width: 90%;
+        max-width: 400px;
+    }
+
     .boarding-content {
         padding: 1.5rem;
         font-size: 1rem;

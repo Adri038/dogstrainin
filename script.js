@@ -17,6 +17,32 @@ const defaultData = {
     login: {
         username: 'admin',
         password: 'admin123'
+    },
+    texts: {
+        home: [
+            "We are so glad you stopped by our webpage!",
+            "Our main goal is to make you and your pup a better functioning, safe team.",
+            "We begin our instruction in your home.  This allows me to see your house and dog in action.  We will discuss your ideas and what you want from our sessions.",
+            "We can start in the first session with beginning commands:  sit, down, touch/boop.  From there, we can create a teaching schedule the whole family can be part of.",
+            "Learning for a dog can have its limitations as a human learning, patience, and repetition.  I was taught Positive Reinforcement; this is safer and keeps your dog attentive.  Reach out on our contact page, and I will get back with you!  You are going to make a great team!"
+        ],
+        about: [
+            "It's a dog's world!",
+            "They are great animals who give their love so freely and never ask anything in return. Dogs have always been a part of my life.  When I was a child, I rode horses in playdays, rodeos and showed steers in 4-H.  But I always had a dog with me.",
+            "Canine obedience training is a goal I had always set for myself but never set the time.  Now as I move forward toward my goal, I feel encouraged by the learning I have received.  I can see the dog in its truest form, a helper and a companion.",
+            "It is more important than ever to have a well-behaved dog in our society; whether flying, going to the dog park, or simply walking down the street.  Well-mannered dogs are noticeable as they saunter down the street, they receive smiles and \"may I pet your dog\".  They are a child to be proud of!  Not just our pride, but safety:  an untrained dog could shake out of his/her collar and bolt into traffic!  Will they return to you when you call?",
+            "Our dogs want to respect us and follow the leader while being taught. Now is your time to teach your dog to follow \"you\" the leader.",
+            "I am a certified professional trainer with memberships in leading canine training organizations and certifications in positive reinforcement training methods."
+        ],
+        services: [
+            "We come to your home. This enables me to know the hierarchy in the home, where the dog's place is. And you are there with us, so you learn alongside your dog! During our phone conversation we can discuss what you need to help your relationship with the dog."
+        ],
+        concierge: [
+            "In our ever-demanding world, the needs of family and the fur-baby are increasing. In an effort to ease this stress of our clients, we would like to introduce \"Puppy Concierge\". We will help fur-baby parents by performing smaller tasks that add up. Picking up or dropping off at daycare, vet drop-offs, pup cup emergencies! Let us help you as we get to know you and your pet better!"
+        ],
+        boarding: [
+            "Coming soon"
+        ]
     }
 };
 
@@ -660,6 +686,7 @@ function initLogin() {
         if (loginContainer) loginContainer.style.display = 'none';
         if (adminPanel) adminPanel.style.display = 'block';
         renderAdminVideos();
+        initTextEditor(); // Initialize text editor when panel is shown
     }
 
     function hideAdminPanel() {
@@ -807,6 +834,7 @@ function initSlideshow() {
     if (slides.length === 0) return;
     
     let currentSlide = 0;
+    let slideshowInterval;
     
     function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -825,11 +853,142 @@ function initSlideshow() {
         showSlide(currentSlide);
     }
     
-    // Change slide every 6 seconds for slower, smoother transitions
-    setInterval(nextSlide, 6000);
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    function startSlideshow() {
+        // Clear existing interval
+        if (slideshowInterval) {
+            clearInterval(slideshowInterval);
+        }
+        // Change slide every 6 seconds for slower, smoother transitions
+        slideshowInterval = setInterval(nextSlide, 6000);
+    }
+    
+    function stopSlideshow() {
+        if (slideshowInterval) {
+            clearInterval(slideshowInterval);
+        }
+    }
     
     // Initialize first slide
     showSlide(0);
+    startSlideshow();
+    
+    // Add event listeners to control buttons
+    const prevBtn = document.getElementById('slideshowPrev');
+    const nextBtn = document.getElementById('slideshowNext');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopSlideshow();
+            startSlideshow(); // Restart timer
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopSlideshow();
+            startSlideshow(); // Restart timer
+        });
+    }
+}
+
+// Load and apply page texts
+function loadPageTexts() {
+    const texts = appData.texts || {};
+    
+    // Apply texts to all editable elements
+    document.querySelectorAll('.editable-text').forEach(element => {
+        const page = element.getAttribute('data-page');
+        const index = parseInt(element.getAttribute('data-index'));
+        
+        if (texts[page] && texts[page][index] !== undefined) {
+            element.textContent = texts[page][index];
+        }
+    });
+}
+
+// Load texts into editor
+function loadTextsIntoEditor() {
+    const texts = appData.texts || {};
+    
+    // Load all text inputs
+    document.querySelectorAll('.text-editor-input').forEach(input => {
+        const page = input.getAttribute('data-page');
+        const index = parseInt(input.getAttribute('data-index'));
+        
+        if (texts[page] && texts[page][index] !== undefined) {
+            input.value = texts[page][index];
+        }
+    });
+}
+
+// Save texts from editor
+function saveTexts(page) {
+    const inputs = document.querySelectorAll(`.text-editor-input[data-page="${page}"]`);
+    const texts = [];
+    
+    inputs.forEach(input => {
+        const index = parseInt(input.getAttribute('data-index'));
+        texts[index] = input.value.trim();
+    });
+    
+    // Remove undefined entries
+    const cleanTexts = texts.filter(text => text !== undefined && text !== '');
+    
+    if (!appData.texts) {
+        appData.texts = {};
+    }
+    
+    appData.texts[page] = cleanTexts;
+    saveData(appData);
+    loadPageTexts(); // Apply changes immediately
+    showSuccessMessage(`${page.charAt(0).toUpperCase() + page.slice(1)} texts saved successfully!`);
+}
+
+// Initialize text editor tabs
+function initTextEditorTabs() {
+    const tabBtns = document.querySelectorAll('.text-edit-tab-btn');
+    const tabContents = document.querySelectorAll('.text-edit-tab-content');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.getAttribute('data-text-tab');
+            
+            // Remove active from all buttons and contents
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            // Add active to clicked button and corresponding content
+            btn.classList.add('active');
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+}
+
+// Initialize text editor
+function initTextEditor() {
+    // Load texts into editor when admin panel is shown
+    loadTextsIntoEditor();
+    
+    // Initialize tabs
+    initTextEditorTabs();
+    
+    // Add save button listeners
+    document.querySelectorAll('.save-texts-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const page = btn.getAttribute('data-page');
+            saveTexts(page);
+        });
+    });
 }
 
 // Initialize when DOM is ready
@@ -847,10 +1006,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initSlideshow();
     applyConfig();
     renderVideos();
+    loadPageTexts(); // Load saved texts
     
-    // If logged in, also render admin videos
+    // If logged in, also render admin videos and init text editor
     if (isLoggedIn()) {
         renderAdminVideos();
+        initTextEditor();
     }
 });
 

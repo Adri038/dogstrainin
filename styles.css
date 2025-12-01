@@ -801,6 +801,30 @@ body {
 /* Contact */
 .contacto-section {
     background: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.contacto-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    width: 600px;
+    height: 600px;
+    background-image: url('IMG/Logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.contacto-section .container {
+    position: relative;
+    z-index: 1;
 }
 
 .contact-title {

@@ -70,9 +70,31 @@ function isLoggedIn() {
 
 // Función para extraer el ID de YouTube de una URL
 function getYouTubeId(url) {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
+    if (!url) return null;
+    
+    // Limpiar la URL
+    url = url.trim();
+    
+    // Patrones para diferentes formatos de URL de YouTube
+    const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([^&\n?#]+)/,
+        /youtube\.com\/.*[?&]v=([^&\n?#]+)/,
+        /youtu\.be\/([^&\n?#]+)/
+    ];
+    
+    for (let pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1] && match[1].length === 11) {
+            return match[1];
+        }
+    }
+    
+    // Si la URL es solo el ID (11 caracteres)
+    if (url.length === 11 && /^[a-zA-Z0-9_-]{11}$/.test(url)) {
+        return url;
+    }
+    
+    return null;
 }
 
 // Función para generar el thumbnail de YouTube
@@ -82,13 +104,39 @@ function getYouTubeThumbnail(videoId) {
 
 // Función para crear una tarjeta de video
 function createVideoCard(video, category, index = null, showDelete = false) {
+    if (!video || !video.url) return '';
+    
     const videoId = getYouTubeId(video.url);
-    if (!videoId) return '';
+    if (!videoId) {
+        console.warn('Invalid YouTube URL:', video.url);
+        // Si estamos en el panel de admin, mostrar con botón de eliminar
+        if (showDelete && index !== null) {
+            const safeCategory = escapeHtml(category);
+            const safeIndex = index;
+            const deleteBtn = `
+                <button class="video-card-delete" data-category="${safeCategory}" data-index="${safeIndex}" title="Delete video" style="position: absolute; top: 10px; right: 10px; background: #dc3545; color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            `;
+            return `<div class="video-card-error" data-index="${safeIndex}" data-category="${safeCategory}" style="position: relative; padding: 1rem; background: #fee; border: 2px solid #fcc; border-radius: 8px; color: #c33; margin-bottom: 1rem;">
+                ${deleteBtn}
+                <p style="margin: 0; font-weight: 600;"><strong>⚠️ Invalid Video URL</strong></p>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem;"><strong>Title:</strong> ${escapeHtml(video.title || 'Untitled')}</p>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; word-break: break-all;"><strong>URL:</strong> ${escapeHtml(video.url)}</p>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: #a00;">Please check the YouTube URL or delete this entry.</p>
+            </div>`;
+        }
+        // Si no estamos en admin, no mostrar nada
+        return '';
+    }
 
     const thumbnail = getYouTubeThumbnail(videoId);
     const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    const safeTitle = escapeHtml(video.title);
-    const safeDescription = escapeHtml(video.description);
+    const safeTitle = escapeHtml(video.title || 'Untitled Video');
+    const safeDescription = escapeHtml(video.description || 'No description');
     const safeEmbedUrl = embedUrl.replace(/'/g, "\\'");
 
     const deleteBtn = showDelete && index !== null ? `
@@ -213,10 +261,21 @@ function renderVideos() {
         const container = document.getElementById(id);
         if (container) {
             const videos = appData.videos[backend] || [];
+            console.log(`Rendering ${videos.length} videos for category ${backend} in container ${id}`);
+            
             if (videos.length === 0) {
                 container.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">No videos available in this category.</p>';
             } else {
-                container.innerHTML = videos.map(video => createVideoCard(video, backend)).join('');
+                const cardsHtml = videos.map((video, idx) => {
+                    const card = createVideoCard(video, backend);
+                    if (!card) {
+                        console.warn(`Failed to create card for video ${idx} in category ${backend}:`, video);
+                    }
+                    return card;
+                }).filter(card => card).join('');
+                
+                container.innerHTML = cardsHtml;
+                
                 // Add event listeners to video cards
                 container.querySelectorAll('.video-card').forEach(card => {
                     card.addEventListener('click', function() {
@@ -226,6 +285,8 @@ function renderVideos() {
                     });
                 });
             }
+        } else {
+            console.warn(`Container with id ${id} not found`);
         }
     });
 }
@@ -251,31 +312,58 @@ function renderAdminVideos() {
                 container.style.display = 'grid';
                 container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
                 container.style.gap = '1.5rem';
-                container.innerHTML = videos.map((video, index) => {
-                    return createVideoCard(video, backend, index, true); // true = show delete button
-                }).join('');
                 
-                // Add event listeners to video cards
-                container.querySelectorAll('.video-card').forEach(card => {
+                // Render all videos, including those with errors
+                const allCards = videos.map((video, index) => {
+                    return createVideoCard(video, backend, index, true); // true = show delete button
+                }).filter(card => card).join('');
+                
+                container.innerHTML = allCards;
+                
+                // Add event listeners to video cards (both valid and error cards)
+                container.querySelectorAll('.video-card, .video-card-error').forEach(card => {
                     const deleteBtn = card.querySelector('.video-card-delete');
                     if (deleteBtn) {
                         deleteBtn.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            const videoIndex = parseInt(card.getAttribute('data-index'));
+                            e.preventDefault();
+                            // Try to get index from button or card
+                            const videoIndex = parseInt(
+                                deleteBtn.getAttribute('data-index') || 
+                                card.getAttribute('data-index') || 
+                                card.closest('[data-index]')?.getAttribute('data-index')
+                            );
+                            const videoCategory = deleteBtn.getAttribute('data-category') || 
+                                                 card.getAttribute('data-category') || 
+                                                 backend;
                             if (!isNaN(videoIndex)) {
-                                deleteVideo(backend, videoIndex);
+                                deleteVideo(videoCategory, videoIndex);
                             }
+                        });
+                        
+                        // Add hover effect
+                        deleteBtn.addEventListener('mouseenter', function() {
+                            this.style.transform = 'scale(1.1)';
+                            this.style.background = '#c82333';
+                        });
+                        deleteBtn.addEventListener('mouseleave', function() {
+                            this.style.transform = 'scale(1)';
+                            this.style.background = '#dc3545';
                         });
                     }
                     
-                    // Allow clicking on card to view video
-                    card.addEventListener('click', function(e) {
-                        if (!e.target.closest('.video-card-delete')) {
-                            const videoUrl = this.getAttribute('data-video-url');
-                            const videoTitle = this.getAttribute('data-video-title');
-                            openVideoModal(videoUrl, videoTitle);
-                        }
-                    });
+                    // Allow clicking on valid video cards to view video
+                    if (card.classList.contains('video-card') && !card.classList.contains('video-card-error')) {
+                        card.addEventListener('click', function(e) {
+                            if (!e.target.closest('.video-card-delete')) {
+                                const videoUrl = this.getAttribute('data-video-url');
+                                const videoTitle = this.getAttribute('data-video-title');
+                                if (videoUrl && videoTitle) {
+                                    openVideoModal(videoUrl, videoTitle);
+                                }
+                            }
+                        });
+                    }
                 });
             }
         }
@@ -295,6 +383,13 @@ function deleteVideo(category, index) {
 
 // Agregar video
 function addVideo(category, title, url, description) {
+    // Validar que la URL de YouTube sea válida
+    const videoId = getYouTubeId(url);
+    if (!videoId) {
+        alert('Invalid YouTube URL. Please use a valid YouTube link (e.g., https://www.youtube.com/watch?v=VIDEO_ID or https://youtu.be/VIDEO_ID)');
+        return false;
+    }
+    
     if (!appData.videos[category]) {
         appData.videos[category] = [];
     }
@@ -302,6 +397,7 @@ function addVideo(category, title, url, description) {
     saveData(appData);
     renderAdminVideos();
     renderVideos();
+    return true;
 }
 
 // Actualizar configuración
@@ -480,10 +576,12 @@ function showAddVideoModal(category) {
         const description = form.querySelector('.modal-video-desc').value.trim();
         
         if (title && url && description) {
-            addVideo(category, title, url, description);
-            modal.remove();
-            document.removeEventListener('keydown', handleEsc);
-            showSuccessMessage('Video added successfully');
+            const success = addVideo(category, title, url, description);
+            if (success) {
+                modal.remove();
+                document.removeEventListener('keydown', handleEsc);
+                showSuccessMessage('Video added successfully');
+            }
         } else {
             alert('Please fill in all fields');
         }
@@ -686,7 +784,10 @@ function initLogin() {
         if (loginContainer) loginContainer.style.display = 'none';
         if (adminPanel) adminPanel.style.display = 'block';
         renderAdminVideos();
-        initTextEditor(); // Initialize text editor when panel is shown
+        // Initialize text editor when panel is shown - this will load current page texts
+        setTimeout(() => {
+            initTextEditor();
+        }, 100); // Small delay to ensure DOM is ready
     }
 
     function hideAdminPanel() {
@@ -916,14 +1017,32 @@ function loadPageTexts() {
 // Load texts into editor
 function loadTextsIntoEditor() {
     const texts = appData.texts || {};
+    const defaultTexts = defaultData.texts || {};
     
     // Load all text inputs
     document.querySelectorAll('.text-editor-input').forEach(input => {
         const page = input.getAttribute('data-page');
         const index = parseInt(input.getAttribute('data-index'));
+        let loaded = false;
         
-        if (texts[page] && texts[page][index] !== undefined) {
+        // Priority 1: Load from saved data (if exists and not empty)
+        if (texts[page] && texts[page][index] !== undefined && texts[page][index] !== '') {
             input.value = texts[page][index];
+            loaded = true;
+        } 
+        
+        // Priority 2: Load from default data if no saved data
+        if (!loaded && defaultTexts[page] && defaultTexts[page][index] !== undefined) {
+            input.value = defaultTexts[page][index];
+            loaded = true;
+        }
+        
+        // Priority 3: Try to load from current page content (if on that page and nothing loaded yet)
+        if (!loaded) {
+            const pageElement = document.querySelector(`.editable-text[data-page="${page}"][data-index="${index}"]`);
+            if (pageElement && pageElement.textContent.trim()) {
+                input.value = pageElement.textContent.trim();
+            }
         }
     });
 }
@@ -969,6 +1088,8 @@ function initTextEditorTabs() {
             const targetContent = document.getElementById(targetTab);
             if (targetContent) {
                 targetContent.classList.add('active');
+                // Reload texts when switching tabs to ensure current page content is shown
+                loadTextsIntoEditor();
             }
         });
     });
@@ -1018,4 +1139,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // Save initial data if it doesn't exist
 if (!localStorage.getItem('perrosGuiasData')) {
     saveData(defaultData);
+}
+
+// Asegurar que appData tenga la estructura correcta
+if (!appData.videos) {
+    appData.videos = {
+        comandos: [],
+        orinal: [],
+        reactivos: [],
+        trucos: []
+    };
+    saveData(appData);
 }

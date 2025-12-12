@@ -12,7 +12,10 @@ const defaultData = {
         phoneNumber: '+521234567890',
         youtubeUrl: 'https://youtube.com',
         instagramUrl: 'https://instagram.com',
-        facebookUrl: 'https://facebook.com'
+        facebookUrl: 'https://facebook.com',
+        emailjsServiceId: '',
+        emailjsTemplateId: '',
+        emailjsPublicKey: ''
     },
     login: {
         username: 'admin',
@@ -405,6 +408,15 @@ function updateConfig(key, value) {
     appData.config[key] = value;
     saveData(appData);
     applyConfig();
+    
+    // Reinitialize EmailJS if Public Key was updated
+    if (key === 'emailjsPublicKey' && typeof emailjs !== 'undefined' && value) {
+        try {
+            emailjs.init(value);
+        } catch (error) {
+            console.warn('EmailJS reinitialization error:', error);
+        }
+    }
 }
 
 // Apply configuration
@@ -452,6 +464,15 @@ function applyConfig() {
     if (youtubeUrl) youtubeUrl.value = appData.config.youtubeUrl;
     if (instagramUrl) instagramUrl.value = appData.config.instagramUrl;
     if (facebookUrl) facebookUrl.value = appData.config.facebookUrl;
+    
+    // Update EmailJS config fields
+    const emailjsPublicKey = document.getElementById('emailjsPublicKey');
+    const emailjsServiceId = document.getElementById('emailjsServiceId');
+    const emailjsTemplateId = document.getElementById('emailjsTemplateId');
+    
+    if (emailjsPublicKey) emailjsPublicKey.value = appData.config.emailjsPublicKey || '';
+    if (emailjsServiceId) emailjsServiceId.value = appData.config.emailjsServiceId || '';
+    if (emailjsTemplateId) emailjsTemplateId.value = appData.config.emailjsTemplateId || '';
 }
 
 // Smooth scrolling (only for anchors on the same page)
@@ -680,6 +701,18 @@ function initConfigButtons() {
                     input = document.getElementById('facebookUrl');
                     key = 'facebookUrl';
                     break;
+                case 'emailjsPublicKey':
+                    input = document.getElementById('emailjsPublicKey');
+                    key = 'emailjsPublicKey';
+                    break;
+                case 'emailjsServiceId':
+                    input = document.getElementById('emailjsServiceId');
+                    key = 'emailjsServiceId';
+                    break;
+                case 'emailjsTemplateId':
+                    input = document.getElementById('emailjsTemplateId');
+                    key = 'emailjsTemplateId';
+                    break;
             }
             
             if (input && key) {
@@ -801,27 +834,100 @@ function initContactForm() {
     const contactForm = document.getElementById('contactForm');
     
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        // Initialize EmailJS if Public Key is configured and emailjs is available
+        if (typeof emailjs !== 'undefined' && appData.config.emailjsPublicKey) {
+            try {
+                emailjs.init(appData.config.emailjsPublicKey);
+            } catch (error) {
+                console.warn('EmailJS initialization error:', error);
+            }
+        }
+        
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const nombre = document.getElementById('nombre').value;
-            const email = document.getElementById('email').value;
-            const mensaje = document.getElementById('mensaje').value;
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mensaje = document.getElementById('mensaje').value.trim();
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
             
-            // Create mailto link
-            const subject = encodeURIComponent(`Contact from website - ${nombre}`);
-            const body = encodeURIComponent(`Name: ${nombre}\nEmail: ${email}\n\nMessage:\n${mensaje}`);
-            const mailtoLink = `mailto:${appData.config.contactEmail}?subject=${subject}&body=${body}`;
+            // Validate form
+            if (!nombre || !email || !mensaje) {
+                alert('Please fill in all fields');
+                return;
+            }
             
-            // Open email client
-            window.location.href = mailtoLink;
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
             
-            // Clear form
-            contactForm.reset();
+            // Disable submit button
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+            }
             
-            alert('Thank you for contacting us. Your email client will open.');
+            // Try to send via EmailJS if configured
+            if (appData.config.emailjsServiceId && appData.config.emailjsTemplateId && appData.config.emailjsPublicKey) {
+                try {
+                    const templateParams = {
+                        from_name: nombre,
+                        from_email: email,
+                        message: mensaje,
+                        to_email: appData.config.contactEmail,
+                        reply_to: email
+                    };
+                    
+                    await emailjs.send(
+                        appData.config.emailjsServiceId,
+                        appData.config.emailjsTemplateId,
+                        templateParams
+                    );
+                    
+                    // Success
+                    contactForm.reset();
+                    showSuccessMessage('Thank you! Your message has been sent successfully.');
+                    
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Send Message';
+                    }
+                } catch (error) {
+                    console.error('EmailJS Error:', error);
+                    // Fallback to mailto if EmailJS fails
+                    fallbackToMailto(nombre, email, mensaje);
+                    
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Send Message';
+                    }
+                }
+            } else {
+                // Fallback to mailto if EmailJS is not configured
+                fallbackToMailto(nombre, email, mensaje);
+                
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                }
+            }
         });
     }
+}
+
+// Fallback function to use mailto link
+function fallbackToMailto(nombre, email, mensaje) {
+    const subject = encodeURIComponent(`Contact from website - ${nombre}`);
+    const body = encodeURIComponent(`Name: ${nombre}\nEmail: ${email}\n\nMessage:\n${mensaje}`);
+    const mailtoLink = `mailto:${appData.config.contactEmail}?subject=${subject}&body=${body}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    alert('Thank you for contacting us. Your email client will open.');
 }
 
 // Hamburger menu

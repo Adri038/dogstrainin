@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services - Positive Reinforcement</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -314,6 +315,26 @@
                         <label for="facebookUrl">Facebook URL:</label>
                         <input type="url" id="facebookUrl" class="config-input">
                         <button class="btn-primary save-config-btn" data-config="facebook">Save</button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Email Configuration (EmailJS)</h3>
+                    <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.9rem;">Configure EmailJS to send contact form messages directly to your email. <a href="https://www.emailjs.com/" target="_blank" style="color: var(--primary-color);">Sign up for free at EmailJS.com</a></p>
+                    <div class="config-group">
+                        <label for="emailjsPublicKey">EmailJS Public Key:</label>
+                        <input type="text" id="emailjsPublicKey" class="config-input" placeholder="your_public_key">
+                        <button class="btn-primary save-config-btn" data-config="emailjsPublicKey">Save</button>
+                    </div>
+                    <div class="config-group">
+                        <label for="emailjsServiceId">EmailJS Service ID:</label>
+                        <input type="text" id="emailjsServiceId" class="config-input" placeholder="service_xxxxx">
+                        <button class="btn-primary save-config-btn" data-config="emailjsServiceId">Save</button>
+                    </div>
+                    <div class="config-group">
+                        <label for="emailjsTemplateId">EmailJS Template ID:</label>
+                        <input type="text" id="emailjsTemplateId" class="config-input" placeholder="template_xxxxx">
+                        <button class="btn-primary save-config-btn" data-config="emailjsTemplateId">Save</button>
                     </div>
                 </div>
             </div>
